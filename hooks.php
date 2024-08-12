@@ -49,18 +49,18 @@ add_hook('ClientEdit', 1, 'hook_azuracast_clientedit');
  */
 add_hook('ClientAreaPrimaryNavbar', 1, function ($menu)
 {
-    // Check whether the services menu exists.
-    if (!is_null($menu->getChild('Services'))) {
-        // Add a link to the module filter.
-        $menu->getChild('Services')
-            ->addChild(
-                'Provisioning Module Products',
-                array(
-                    'uri' => 'clientarea.php?action=services&module=azuracast',
-                    'order' => 15,
-                )
-            );
-    }
+//    // Check whether the services menu exists.
+//    if (!is_null($menu->getChild('Services'))) {
+//        // Add a link to the module filter.
+//        $menu->getChild('Services')
+//            ->addChild(
+//                'Provisioning Module Products',
+//                array(
+//                    'uri' => 'clientarea.php?action=services&module=azuracast',
+//                    'order' => 15,
+//                )
+//            );
+//    }
 });
 
 /**
@@ -75,31 +75,31 @@ add_hook('ClientAreaPrimaryNavbar', 1, function ($menu)
  */
 add_hook('ClientAreaSecondarySidebar', 1, function ($secondarySidebar)
 {
-    // determine if we are on a page containing My Services Actions
-    if (!is_null($secondarySidebar->getChild('My Services Actions'))) {
-
-        // define new sidebar panel
-        $customPanel = $secondarySidebar->addChild('Provisioning Module Sample Panel');
-
-        // set panel attributes
-        $customPanel->moveToFront()
-            ->setIcon('fa-user')
-            ->setBodyHtml(
-                'Your HTML output goes here...'
-            )
-            ->setFooterHtml(
-                'Footer HTML can go here...'
-            );
-
-        // define link
-        $customPanel->addChild(
-                'Sample Link Menu Item',
-                array(
-                    'uri' => 'clientarea.php?action=services&module=azuracast',
-                    'icon'  => 'fa-list-alt',
-                    'order' => 2,
-                )
-            );
-
-    }
+//    // determine if we are on a page containing My Services Actions
+//    if (!is_null($secondarySidebar->getChild('My Services Actions'))) {
+//
+//        // define new sidebar panel
+//        $customPanel = $secondarySidebar->addChild('Provisioning Module Sample Panel');
+//
+//        // set panel attributes
+//        $customPanel->moveToFront()
+//            ->setIcon('fa-user')
+//            ->setBodyHtml(
+//                'Your HTML output goes here...'
+//            )
+//            ->setFooterHtml(
+//                'Footer HTML can go here...'
+//            );
+//
+//        // define link
+//        $customPanel->addChild(
+//                'Sample Link Menu Item',
+//                array(
+//                    'uri' => 'clientarea.php?action=services&module=azuracast',
+//                    'icon'  => 'fa-list-alt',
+//                    'order' => 2,
+//                )
+//            );
+//
+//    }
 });
