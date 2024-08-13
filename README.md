@@ -12,6 +12,7 @@ https://github.com/AzuraCast/AzuraCast/pull/7388
 
 - Has the following configurable options per product:
     - Server Type: Icecast, Shoutcast
+    - Maximum Bitrate
     - Maximum Mount Points & HLS Streams
     - Maximum Listeners
     - Maximum Storage space (applies to: Media Storage, Podcasts Storage and Recordings storage)
