@@ -12,7 +12,7 @@
  * Required Field, Show on Order Form
  *
  * @written_by Yahav [DOT] Shasha [AT] gmail [DOT] com
- * @license Within the Lib folder there are files from the official AzuraCast PHP SDK (https://github.com/AzuraCast/php-api-client) (Apache-2.0 license)
+ * @license Within the Lib folder there are some modified files from the [official AzuraCast PHP SDK](https://github.com/AzuraCast/php-api-client) (Apache-2.0 license)
  * @license The rest is under "Do whatever you want" License
  */
 
@@ -64,9 +64,27 @@ function azuracast_ConfigOptions()
             'Type' => 'text',
             'Size' => '10',
             'Default' => '2',
-            'Description' => 'Max Mounts/HLS Streams',
+            'Description' => 'Maximum allowed Mount Points',
         ],
-        'Storage Limit' => [
+        'Maximum HLS Streams' => [
+            'Type' => 'text',
+            'Size' => '10',
+            'Default' => '2',
+            'Description' => 'Maximum allowed HLS Streams',
+        ],
+        'Media Storage Limit' => [
+            'Type' => 'text',
+            'Size' => '10',
+            'Default' => '1000',
+            'Description' => 'Enter in Mb',
+        ],
+        'Recordings Storage Limit' => [
+            'Type' => 'text',
+            'Size' => '10',
+            'Default' => '1000',
+            'Description' => 'Enter in Mb',
+        ],
+        'Podcasts Storage Limit' => [
             'Type' => 'text',
             'Size' => '10',
             'Default' => '1000',
@@ -430,6 +448,59 @@ function azuracast_TestConnection(array $params)
         'error' => $errorMsg,
     );
 }
+
+/**
+ * ----------------------------------------------------------------------------------
+ * THIS DOESN'T WORK YET AS AZURACAST DOESN'T HAVE AN API ENDPOINT FOR USER LOGIN
+ * ----------------------------------------------------------------------------------
+ *
+ * Perform single sign-on for a given instance of a product/service.
+ *
+ * Called when single sign-on is requested for an instance of a product/service.
+ *
+ * When successful, returns an URL to which the user should be redirected.
+ *
+ * @param array $params common module parameters
+ *
+ * @return array
+ *@see https://developers.whmcs.com/provisioning-modules/module-parameters/
+ *
+ */
+/**
+function azuracast_ServiceSingleSignOn(array $params)
+{
+    $return = array(
+        'success' => false,
+    );
+    try {
+
+        $service = new Service($params);
+        $azuracast = azuracast_ApiClient($params);
+        $loginUrl = $azuracast->admin()->stations()->login($service->getStationId());
+
+        $return = array(
+            'success' => true,
+            'redirectTo' => $loginUrl,
+        );
+
+    } catch (Exception $e) {
+        // Record the error in WHMCS's module log.
+        logModuleCall(
+            'azuracast',
+            __FUNCTION__,
+            $params,
+            $e->getMessage(),
+            $e->getTraceAsString()
+        );
+
+        $return['errorMsg'] = $e->getMessage();
+        $response = $e->getMessage();
+        $formattedResponse = $e->getTraceAsString();
+    }
+
+    return $return;
+}
+*/
 
 function azuracast_ApiClient($params) : Client
 {

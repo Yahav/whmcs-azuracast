@@ -11,10 +11,11 @@ class Service
      */
     private int $maxBitrate;
     private int $maxMounts;
+    private int $maxHlsStreams;
     /**
      * @var int Max Storage Space in MB
      */
-    private int $storage;
+    private int $mediaStorage, $recordingsStorage, $podcastsStorage;
 
     private int|string $maxListeners;
     private string $statioName;
@@ -28,9 +29,12 @@ class Service
     {
         $this->maxBitrate = $params['configoption1'] ?? 0;
         $this->maxMounts = $params['configoption2'] ?? 0;
-        $this->storage = $params['configoption3'];
-        $this->maxListeners = $params['configoption4'];
-        $this->serverType = $params['configoption5'];
+        $this->maxHlsStreams = $params['configoption3'] ?? 0;
+        $this->mediaStorage = $params['configoption4'];
+        $this->recordingsStorage = $params['configoption5'];
+        $this->podcastsStorage = $params['configoption6'];
+        $this->maxListeners = $params['configoption7'];
+        $this->serverType = $params['configoption8'];
         $this->password = $params['password'];
         $this->statioName = $params['customfields']['Station Name'];
         $this->userFullName = $params['clientsdetails']['fullname'];
@@ -48,14 +52,39 @@ class Service
         return $this->maxMounts;
     }
 
-    public function getStorage(): string
+    public function getMaxHlsStreams(): int
     {
-        return $this->storage;
+        return $this->maxHlsStreams;
     }
 
-    public function getStorageInBytes(): int
+    public function getMediaStorage(): string
     {
-        return $this->storage * 1000000;
+        return $this->mediaStorage;
+    }
+
+    public function getMediaStorageInBytes(): int
+    {
+        return $this->mediaStorage * 1000000;
+    }
+
+    public function getRecordingsStorage(): string
+    {
+        return $this->recordingsStorage;
+    }
+
+    public function getRecordingsStorageInBytes(): int
+    {
+        return $this->recordingsStorage * 1000000;
+    }
+
+    public function getPodcastsStorage(): string
+    {
+        return $this->podcastsStorage;
+    }
+
+    public function getPodcastsStorageInBytes(): int
+    {
+        return $this->podcastsStorage * 1000000;
     }
 
     public function getMaxListeners(): int|string

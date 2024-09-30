@@ -25,16 +25,16 @@ class StorageClient extends AbstractClient
         $storageTypes = ['Media', 'Podcasts', 'Recordings'];
 
         foreach ($storageTypes as $storageType) {
-            $getterMethod = 'get' . $storageType . 'StorageId';
+            $idGetterMethod = 'get' . $storageType . 'StorageId';
             $storageData = [
-                'id' => $serviceDetails->$getterMethod(),
-                'storageQuota' => $serviceDetails->getStorage() . ' MB',
-                'storageQuotaBytes' => $serviceDetails->getStorageInBytes(),
+                'id' => $serviceDetails->$idGetterMethod(),
+                'storageQuota' => $serviceDetails->{'get' . $storageType . 'Storage'}() . ' MB',
+                'storageQuotaBytes' => $serviceDetails->{'get' . $storageType . 'StorageInBytes'}(),
             ];
 
             $this->request(
                 'PUT',
-                sprintf('admin/storage_location/%s', $serviceDetails->$getterMethod()),
+                sprintf('admin/storage_location/%s', $serviceDetails->$idGetterMethod()),
                 ['json' => $storageData]
             );
         }

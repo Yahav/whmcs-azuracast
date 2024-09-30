@@ -75,7 +75,7 @@ class StationsClient extends AbstractClient
             'timezone' => 'UTC',
             'max_bitrate' => $serviceDetails->getMaxBitrate(),
             'max_mounts' => $serviceDetails->getMaxMounts(),
-            'max_hls_streams' => $serviceDetails->getMaxMounts()
+            'max_hls_streams' => $serviceDetails->getMaxHlsStreams()
         ];
 
         $newStationData =  $this->request(
@@ -107,7 +107,7 @@ class StationsClient extends AbstractClient
             ],
             'max_bitrate' => $serviceDetails->getMaxBitrate(),
             'max_mounts' => $serviceDetails->getMaxMounts(),
-            'max_hls_streams' => $serviceDetails->getMaxMounts()
+            'max_hls_streams' => $serviceDetails->getMaxHlsStreams()
         ];
 
         $newStationData =  $this->request(
@@ -131,5 +131,31 @@ class StationsClient extends AbstractClient
             'DELETE',
             sprintf('admin/station/%s', $stationId)
         );
+    }
+
+    /**
+     * ----------------------------------------------------------------------------------
+     * THIS DOESN'T WORK YET AS AZURACAST DOESN'T HAVE AN API ENDPOINT FOR USER LOGIN
+     * ----------------------------------------------------------------------------------
+     *
+     * @param int $stationId
+     *
+     * @return Dto\StationDto
+     *
+     * @throws Exception\AccessDeniedException
+     * @throws Exception\ClientRequestException
+     */
+    public function login(int $stationId): string
+    {
+        $stationData = $this->request(
+            'POST',
+            sprintf('station/%s/login', $stationId)
+        );
+
+        if (!isset($stationData['login_url'])) {
+            throw new ClientRequestException('Station login URL not found in response');
+        }
+
+        return $stationData['login_url'];
     }
 }
